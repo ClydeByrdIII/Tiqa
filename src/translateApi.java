@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import json.JSONArray;
 import json.JSONObject;
 
 
@@ -43,7 +44,8 @@ public class translateApi {
 		String ret = "";
 		JSONObject json = null;
 		json = new JSONObject(st);
-		ret = (String) json.get(st);
+		JSONArray arr = (JSONArray) json.get("text");
+		ret = (String) arr.get(0);
 		return ret;
 	}
 
