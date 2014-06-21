@@ -72,5 +72,7 @@
     <string name="mainMenu">Main Menu</string>
     
     <string name="title_activity_language">LanguageActivity</string>
+    
+    <string name="sound">Sound</string>
 
 </resources>

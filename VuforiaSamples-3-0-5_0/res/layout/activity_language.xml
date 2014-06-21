@@ -49,17 +49,6 @@
         android:textSize="@dimen/bigger_font_size" />
 
     <Button
-        android:id="@+id/scanBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/languageLabel"
-        android:layout_marginTop="30dp"
-        android:layout_toLeftOf="@+id/english"
-        android:onClick="onScanClick"
-        android:text="@string/scan"
-        android:textSize="@dimen/bigger_font_size" />
-
-    <Button
         android:id="@+id/menuBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -69,5 +58,27 @@
         android:onClick="onMenuClick"
         android:text="@string/mainMenu"
         android:textSize="@dimen/bigger_font_size" />
+
+    <Button
+        android:id="@+id/scanBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/englishLabel"
+        android:layout_below="@+id/languageLabel"
+        android:layout_marginTop="112dp"
+        android:onClick="onScanClick"
+        android:text="@string/scan"
+        android:textSize="@dimen/bigger_font_size" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/language"
+        android:layout_below="@+id/language"
+        android:layout_marginTop="22dp"
+        android:drawableTop="@drawable/sound"
+        android:onClick="onSoundClick"
+        android:text="@string/sound" />
 
 </RelativeLayout>
