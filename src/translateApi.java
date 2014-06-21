@@ -8,6 +8,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import json.JSONArray;
+import json.JSONObject;
+
 
 
 public class translateApi {
@@ -33,7 +36,18 @@ public class translateApi {
 		} catch(Exception error) {
 			error.printStackTrace();
 		}
+		text = parseJsonString(text);
 		return text;
+	}
+	
+	//This gets the translation from the json string
+	public static String parseJsonString(String st){
+		String ret = "";
+		JSONObject json = null;
+		json = new JSONObject(st);
+		JSONArray arr = (JSONArray) json.get("text");
+		ret = (String) arr.get(0);
+		return ret;
 	}
 
 	public static String translate(String srcText, String srcLang, String destLang) {
