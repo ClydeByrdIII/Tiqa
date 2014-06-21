@@ -11,24 +11,17 @@ import java.net.URL;
 
 public class translateApi {
 	
-	public static void writeStream(OutputStream out, String[] values) {
-		StringBuilder formEncodedData = new StringBuilder("");
+	public static void writeStream(OutputStream out, String data) {
 		try {
-			for(int i = 0; i < values.length ; i+=2) {
-				formEncodedData.append(values[i] + "=" + values[i+1] + "&");
-			}
-			formEncodedData.deleteCharAt(formEncodedData.length() - 1);
-			System.out.println(formEncodedData.toString());
-			out.write(formEncodedData.toString().getBytes());
+			out.write(data.getBytes());
 			out.close();
 		} catch(Exception error) {
 			error.printStackTrace();
 		} 
 		
-		
 	}
 	
-	public static void readStream(InputStream in) {
+	public static String readStream(InputStream in) {
 		byte[] response = new byte[1024];
 		String text = "";
 		try {
@@ -36,26 +29,50 @@ public class translateApi {
 				text += new String(response);
 			}
 			in.close();
-			System.out.println(text);
 		} catch(Exception error) {
 			error.printStackTrace();
 		}
+		return text;
 	}
 
 	public static void translate(String srcText, String srcLang, String destLang) {
 		URL url;
 		HttpURLConnection urlConnection = null;
 		try {
+			// create a connection to the translation engine
 			url = new URL("https://translate.yandex.net/api/v1.5/tr.json/translate");
 			urlConnection = (HttpURLConnection) url.openConnection();
+			// implicitly enable POST request
 			urlConnection.setDoOutput(true);
-			urlConnection.setChunkedStreamingMode(0);
-			String array[] = {"key", "trnsl.1.1.20140621T062348Z.a7da5b9951adccec.328c9f2044693e7e2886bd82d197fc29bac29864", "lang", srcLang + "-" + destLang, "text", srcText};
+			// format data
+			String requestParameters[] = 
+				{	// api key
+					"key", "trnsl.1.1.20140621T062348Z.a7da5b9951adccec.328c9f2044693e7e2886bd82d197fc29bac29864",
+					// translating to, from
+					"lang", srcLang + "-" + destLang,
+					// text to translate
+					"text", srcText
+				};
+			
+			StringBuilder data = new StringBuilder();
+			for(int i = 0; i < requestParameters.length ; i+=2) {
+				data.append(requestParameters[i] + "=" + requestParameters[i+1] + "&");
+			}
+			// delete the last &
+			data.setLength(data.length() - 1);
+			urlConnection.setFixedLengthStreamingMode(data.length());
+			
+			// set the format of the data
 			urlConnection.addRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			
+			// Make request
 			OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
-		    writeStream(out, array);
+		    writeStream(out, data.toString());
+		    
+		    // Get Response
 			InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-			readStream(in);
+			String response = readStream(in);
+			System.out.println(response);
 		} catch(Exception error) {
 			error.printStackTrace();
 		} finally {
