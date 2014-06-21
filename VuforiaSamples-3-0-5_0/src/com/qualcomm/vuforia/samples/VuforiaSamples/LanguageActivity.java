@@ -74,7 +74,12 @@ public class LanguageActivity extends Activity {
 	}
 
 	private String fixWord(String input) {
-		input.replaceAll("[0-9]","");
+		input = input.replaceAll("0","");
+		input = input.replaceAll("1","");
+		input = input.replaceAll("2","");
+		input = input.replaceAll("3","");
+		input = input.replaceAll("4","");
+		input = input.replaceAll("5","");
 		return input;
 	}
 
