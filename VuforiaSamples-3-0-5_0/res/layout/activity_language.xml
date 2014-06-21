@@ -1,0 +1,73 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.qualcomm.vuforia.samples.VuforiaSamples.LanguageActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <TextView
+        android:id="@+id/english"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/englishLabel"
+        android:layout_alignBottom="@+id/englishLabel"
+        android:layout_marginLeft="58dp"
+        android:layout_toRightOf="@+id/englishLabel"
+        android:text="@string/english"
+        android:textSize="@dimen/bigger_font_size" />
+
+    <TextView
+        android:id="@+id/languageLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/englishLabel"
+        android:layout_below="@+id/englishLabel"
+        android:layout_marginTop="29dp"
+        android:text="@string/languageLabel"
+        android:textSize="@dimen/bigger_font_size" />
+
+    <TextView
+        android:id="@+id/language"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/languageLabel"
+        android:layout_alignBottom="@+id/languageLabel"
+        android:layout_alignLeft="@+id/english"
+        android:text="@string/language"
+        android:textSize="@dimen/bigger_font_size" />
+
+    <TextView
+        android:id="@+id/englishLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="90dp"
+        android:text="@string/englishLabel"
+        android:textSize="@dimen/bigger_font_size" />
+
+    <Button
+        android:id="@+id/scanBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/languageLabel"
+        android:layout_marginTop="30dp"
+        android:layout_toLeftOf="@+id/english"
+        android:onClick="onScanClick"
+        android:text="@string/scan"
+        android:textSize="@dimen/bigger_font_size" />
+
+    <Button
+        android:id="@+id/menuBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/scanBtn"
+        android:layout_marginLeft="26dp"
+        android:layout_toRightOf="@+id/scanBtn"
+        android:onClick="onMenuClick"
+        android:text="@string/mainMenu"
+        android:textSize="@dimen/bigger_font_size" />
+
+</RelativeLayout>
