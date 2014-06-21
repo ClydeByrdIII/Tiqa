@@ -34,9 +34,7 @@ public class LanguageActivity extends Activity {
 	}
 
 	private String fixWord(String input) {
-		if (input.equals("board2")) {
-			return "board";
-		}
+		input.replaceAll("\\d+.*", "");
 		return input;
 	}
 
