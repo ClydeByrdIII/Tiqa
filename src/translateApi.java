@@ -11,8 +11,6 @@ import java.net.URL;
 import json.JSONArray;
 import json.JSONObject;
 
-
-
 public class translateApi {
 	
 	public static void writeStream(OutputStream out, String data) {
@@ -111,6 +109,6 @@ public class translateApi {
 	}
 
 	public static void main(String args[]) {
-		System.out.println(translate("Hello I am John","en","es"));
+		System.out.println(translate("Hello Tika is the shit","en","es"));
 	}
 }
