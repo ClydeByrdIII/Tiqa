@@ -51,6 +51,7 @@ public class translateApi {
 	public static String translate(String srcText, String srcLang, String destLang) {
 		URL url;
 		HttpURLConnection urlConnection = null;
+		// yandex can only handle a 10000 character limit
 		String translationEngine = "https://translate.yandex.net/api/v1.5/tr.json/translate";
 		String response = null;
 		try {
