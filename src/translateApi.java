@@ -2,6 +2,7 @@ package src;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -15,7 +16,7 @@ public class translateApi {
 		try {
 			out.write(data.getBytes());
 			out.close();
-		} catch(Exception error) {
+		} catch(IOException error) {
 			error.printStackTrace();
 		} 
 		
@@ -35,15 +36,18 @@ public class translateApi {
 		return text;
 	}
 
-	public static void translate(String srcText, String srcLang, String destLang) {
+	public static String translate(String srcText, String srcLang, String destLang) {
 		URL url;
 		HttpURLConnection urlConnection = null;
+		String translationEngine = "https://translate.yandex.net/api/v1.5/tr.json/translate";
+		String response = null;
 		try {
 			// create a connection to the translation engine
-			url = new URL("https://translate.yandex.net/api/v1.5/tr.json/translate");
+			url = new URL(translationEngine);
 			urlConnection = (HttpURLConnection) url.openConnection();
 			// implicitly enable POST request
 			urlConnection.setDoOutput(true);
+			urlConnection.setConnectTimeout(30000);
 			// format data
 			String requestParameters[] = 
 				{	// api key
@@ -54,10 +58,12 @@ public class translateApi {
 					"text", srcText
 				};
 			
+			// encoded in x-www-form-urlencoded ( key=value&key2=value2... )
 			StringBuilder data = new StringBuilder();
 			for(int i = 0; i < requestParameters.length ; i+=2) {
 				data.append(requestParameters[i] + "=" + requestParameters[i+1] + "&");
 			}
+			
 			// delete the last &
 			data.setLength(data.length() - 1);
 			urlConnection.setFixedLengthStreamingMode(data.length());
@@ -67,20 +73,30 @@ public class translateApi {
 			
 			// Make request
 			OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
-		    writeStream(out, data.toString());
 		    
-		    // Get Response
-			InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-			String response = readStream(in);
-			System.out.println(response);
+		    writeStream(out, data.toString());
+		   
+		    if(urlConnection.getResponseCode() != 200) {
+		    	// Error
+		    	response = "Error HTTP Status Code:" 
+		    	+ urlConnection.getResponseCode()
+		    	+ " Message: " + urlConnection.getResponseMessage();
+		    	
+			} else {
+			    // Get Response
+				InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+				response = readStream(in);
+		    }
 		} catch(Exception error) {
 			error.printStackTrace();
 		} finally {
 			urlConnection.disconnect();
 		}
+		
+		return response;
 	}
 
 	public static void main(String args[]) {
-		translate("Hello","en","es");
+		System.out.println(translate("Hello I am John","en","es"));
 	}
 }
